@@ -14,6 +14,8 @@
 		45C8EAE21AB66CC30071B96F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45C8EAE11AB66CC30071B96F /* Images.xcassets */; };
 		45C8EAE51AB66CC30071B96F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 45C8EAE31AB66CC30071B96F /* LaunchScreen.xib */; };
 		45C8EAF11AB66CC30071B96F /* HGScanViewDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C8EAF01AB66CC30071B96F /* HGScanViewDemoTests.m */; };
+		45C8EB081AB6854C0071B96F /* HGLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C8EB051AB6854C0071B96F /* HGLocationView.m */; };
+		45C8EB0C1AB6AB180071B96F /* HGScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C8EB0B1AB6AB180071B96F /* HGScanViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,10 @@
 		45C8EAEA1AB66CC30071B96F /* HGScanViewDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HGScanViewDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45C8EAEF1AB66CC30071B96F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45C8EAF01AB66CC30071B96F /* HGScanViewDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HGScanViewDemoTests.m; sourceTree = "<group>"; };
+		45C8EB041AB6854C0071B96F /* HGLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGLocationView.h; sourceTree = "<group>"; };
+		45C8EB051AB6854C0071B96F /* HGLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGLocationView.m; sourceTree = "<group>"; };
+		45C8EB0A1AB6AB180071B96F /* HGScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HGScanViewController.h; sourceTree = "<group>"; };
+		45C8EB0B1AB6AB180071B96F /* HGScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HGScanViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 		45C8EAC81AB66CC30071B96F = {
 			isa = PBXGroup;
 			children = (
+				45C8EAFA1AB66CCF0071B96F /* HGScanView */,
 				45C8EAD31AB66CC30071B96F /* HGScanViewDemo */,
 				45C8EAED1AB66CC30071B96F /* HGScanViewDemoTests */,
 				45C8EAD21AB66CC30071B96F /* Products */,
@@ -117,6 +124,18 @@
 				45C8EAEF1AB66CC30071B96F /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		45C8EAFA1AB66CCF0071B96F /* HGScanView */ = {
+			isa = PBXGroup;
+			children = (
+				45C8EB041AB6854C0071B96F /* HGLocationView.h */,
+				45C8EB051AB6854C0071B96F /* HGLocationView.m */,
+				45C8EB0A1AB6AB180071B96F /* HGScanViewController.h */,
+				45C8EB0B1AB6AB180071B96F /* HGScanViewController.m */,
+			);
+			name = HGScanView;
+			path = HGScanViewDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +240,8 @@
 			files = (
 				45C8EADD1AB66CC30071B96F /* ViewController.m in Sources */,
 				45C8EADA1AB66CC30071B96F /* AppDelegate.m in Sources */,
+				45C8EB0C1AB6AB180071B96F /* HGScanViewController.m in Sources */,
+				45C8EB081AB6854C0071B96F /* HGLocationView.m in Sources */,
 				45C8EAD71AB66CC30071B96F /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -297,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -333,7 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -345,9 +366,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: 睿 王 (TXM7KNSP4S)";
 				INFOPLIST_FILE = HGScanViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "515215d0-de65-46e5-9957-2191f9496dc2";
 			};
 			name = Debug;
 		};
@@ -358,6 +381,7 @@
 				INFOPLIST_FILE = HGScanViewDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "515215d0-de65-46e5-9957-2191f9496dc2";
 			};
 			name = Release;
 		};

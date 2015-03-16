@@ -7,21 +7,36 @@
 //
 
 #import "ViewController.h"
+#import "HGScanViewController.h"
 
-@interface ViewController ()
+@interface ViewController ()<HGScanViewControllerDelegate>
+
+@property (nonatomic, strong) HGScanViewController* scanController;
 
 @end
 
-@implementation ViewController
+@implementation ViewController  
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+    
+    _scanController = [[HGScanViewController alloc] init];
+    _scanController.focusColor = [UIColor blueColor];
+    _scanController.scanArea = CGRectMake((self.view.bounds.size.width-200)/2, 100, 200, 200);
+    _scanController.delegate = self;
+    [self.view addSubview:_scanController.view];
+    [self addChildViewController:_scanController];
+    [_scanController didMoveToParentViewController:self];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.scanController start];
+}
+
+#pragma mark - HGScanViewControllerDelegate
+-(void)scanViewController:(HGScanViewController *)controller didFinishedScanWithResult:(NSString *)scanResult{
+    NSLog(@"result is : %@",scanResult);
 }
 
 @end
