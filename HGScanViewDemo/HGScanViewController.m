@@ -17,23 +17,28 @@
 @property (nonatomic, strong) AVCaptureDevice* captureDevice;
 @property (nonatomic, strong) AVCaptureMetadataOutput* dataOutput;
 @property (nonatomic, strong) UIView* continerView;
+@property (nonatomic, strong) NSArray* surpportedScanTypes;
 
 @end
 
 @implementation HGScanViewController
 
-- (instancetype)init
+- (instancetype)initWithSupportedTypes:(NSArray *)surppottedTypes
 {
     self = [super init];
     if (self) {
-        self.surpportedScanTypes = @[AVMetadataObjectTypeQRCode];
+        if (surppottedTypes) {
+            self.surpportedScanTypes = surppottedTypes;
+        }else{
+            
+            self.surpportedScanTypes = @[AVMetadataObjectTypeQRCode];
+        }
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self setUp];
 }
 
@@ -71,9 +76,9 @@
 -(UIView *)continerView{
     if (_continerView == nil) {
         _continerView = [[UIView alloc] initWithFrame:self.scanArea];
-        _continerView.backgroundColor = [UIColor lightGrayColor];
-        _continerView.alpha = 0.5;
+        _continerView.backgroundColor = [UIColor clearColor];
         [self.view addSubview:_continerView];
+        [self setUpMaskLayer];
     }
     return _continerView;
 }
@@ -115,6 +120,20 @@
     self.boundingBox.hidden = YES;
 }
 
+-(void)setUpMaskLayer{
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) cornerRadius:0];
+    UIBezierPath *circlePath = [UIBezierPath bezierPathWithRect:self.scanArea];
+    [path appendPath:circlePath];
+    [path setUsesEvenOddFillRule:YES];
+    
+    CAShapeLayer *fillLayer = [CAShapeLayer layer];
+    fillLayer.path = path.CGPath;
+    fillLayer.fillRule = kCAFillRuleEvenOdd;
+    fillLayer.fillColor = [UIColor grayColor].CGColor;
+    fillLayer.opacity = 0.5;
+    [self.view.layer addSublayer:fillLayer];
+}
+
 -(void)updateRectOfIntrest{
     if (CGRectEqualToRect(CGRectZero, _scanArea)) {
         return;
@@ -145,10 +164,12 @@
     NSString *scanResult = nil;
     for (AVMetadataObject *metaData in metadataObjects) {
         if ([self.surpportedScanTypes containsObject:metaData.type]) {
+             [self stop];
             // Transform the meta-data coordinates to screen coords
             AVMetadataMachineReadableCodeObject *transformed = (AVMetadataMachineReadableCodeObject *)[_previewLayer transformedMetadataObjectForMetadataObject:metaData];
             // Update the frame on the _boundingBox view, and show it
-            _boundingBox.frame = transformed.bounds;
+            CGRect frame = transformed.bounds;
+            _boundingBox.frame = frame;
             _boundingBox.hidden = NO;
             // Now convert the corners array into CGPoints in the coordinate system
             // of the bounding box itself
@@ -158,12 +179,15 @@
             _boundingBox.corners = translatedCorners;
             
             scanResult = [transformed stringValue];
+           
+            
+            if (self.delegate && [self.delegate respondsToSelector:@selector(scanViewController:didFinishedScanWithResult:)]) {
+                [self.delegate scanViewController:self didFinishedScanWithResult:scanResult];
+            }
             break;
         }
-    }
-    [self stop];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(scanViewController:didFinishedScanWithResult:)]) {
-        [self.delegate scanViewController:self didFinishedScanWithResult:scanResult];
+        
+        
     }
 }
 

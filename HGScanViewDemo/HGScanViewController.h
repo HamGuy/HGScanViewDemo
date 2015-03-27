@@ -17,9 +17,10 @@
 @property (nonatomic, assign) CGRect scanArea;
 @property (nonatomic, assign) AVCaptureFlashMode flashMode;
 @property (nonatomic, assign) CGFloat foucusLineHeight;
-@property (nonatomic, strong) NSArray* surpportedScanTypes;
 
 @property (nonatomic, weak) id<HGScanViewControllerDelegate> delegate;
+
+- (instancetype)initWithSupportedTypes:(NSArray *)surppottedTypes;
 
 -(void)switchFlashMode:(AVCaptureFlashMode)flashMode;
 
